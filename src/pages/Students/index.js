@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
-import { Avatar, Container } from "@mui/material";
+import { Avatar, Container, Modal } from "@mui/material";
+import { StudentsContext } from "../../context/StudentContext";
+import { CommonsContext } from "../../context/CommonContext";
+import Loader from "../../components/Loader";
 
 const columns = [
   {
@@ -9,7 +12,7 @@ const columns = [
     headerName: "Profile",
     headerClassName: "table-header",
     width: 150,
-    renderCell: (params) => <Avatar avatar={params.row.avatar} />,
+    renderCell: (params) => <Avatar src={params?.row?.profile_picture} />,
   },
   {
     field: "first_name",
@@ -54,7 +57,7 @@ const columns = [
     width: 250,
   },
   {
-    field: "entrollment_date",
+    field: "enrollment_date",
     headerName: "Enrollment Date",
     headerClassName: "table-header",
     width: 200,
@@ -65,17 +68,38 @@ const columns = [
     headerClassName: "table-header",
     width: 200,
   },
+  {
+    field: "Action",
+    headerName: "Action",
+    headerClassName: "table-header",
+    width: 200,
+    renderCell: (params) => <>
+
+    </>,
+  },
 ];
 
 const Students = () => {
+  const {loading} = useContext(CommonsContext);
+  const {students, studentList} = useContext(StudentsContext);
+
+  useEffect(()=> {
+    studentList();
+  }, []);
+
   return (
     <>
-      <Layout>
+      {
+        loading ? (<><Loader /></>): 
+        (
+          <Layout>
         <Container component={"main"}>
           {/* <Appbar title={"Subjects"} /> */}
-          <Table heading="Students" columns={columns} rows={[]} />
+          <Table heading="Students" columns={columns} rows={students} addBtn={true} />
         </Container>
       </Layout>
+        )
+      }
     </>
   );
 };

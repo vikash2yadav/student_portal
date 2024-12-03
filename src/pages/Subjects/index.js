@@ -1,82 +1,53 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
 import { Avatar, Container, Stack } from "@mui/material";
-import Appbar from "../../components/Layout/Appbar";
+import { SubjectsContext } from "../../context/SubjectContext";
+import { CommonsContext } from "../../context/CommonContext";
+import Loader from "../../components/Loader";
 
 const columns = [
   {
-    field: "profile_picture",
-    headerName: "Profile",
+    field: "name",
+    headerName: "Name",
     headerClassName: "table-header",
-    width: 150,
-    renderCell: (params) => <Avatar avatar={params.row.avatar} />,
+    width: 300,
   },
   {
-    field: "first_name",
-    headerName: "First Name",
+    field: "code",
+    headerName: "Code",
     headerClassName: "table-header",
-    width: 150,
-  },
-  {
-    field: "last_name",
-    headerName: "Last Name",
-    headerClassName: "table-header",
-    width: 150,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    headerClassName: "table-header",
-    width: 200,
-  },
-  {
-    field: "gender",
-    headerName: "Gender",
-    headerClassName: "table-header",
-    width: 150,
-  },
-  {
-    field: "dob",
-    headerName: "Birth Date",
-    headerClassName: "table-header",
-    width: 150,
-  },
-  {
-    field: "phone_number",
-    headerName: "Phone Number",
-    headerClassName: "table-header",
-    width: 200,
-  },
-  {
-    field: "address",
-    headerName: "Address",
-    headerClassName: "table-header",
-    width: 250,
-  },
-  {
-    field: "entrollment_date",
-    headerName: "Enrollment Date",
-    headerClassName: "table-header",
-    width: 200,
+    width: 300,
   },
   {
     field: "status",
     headerName: "Status",
     headerClassName: "table-header",
-    width: 200,
+    width: 400,
   },
 ];
 
 const Subjects = () => {
+  const {loading} = useContext(CommonsContext);
+  const {subjects, subjectList} = useContext(SubjectsContext);
+
+  useEffect(()=>{
+    subjectList();
+  }, []);
+
   return (
     <>
-      <Layout>
+     {
+      loading ? (<><Loader /></>):
+      (
+        <Layout>
         <Container component={"main"}>
           {/* <Appbar title={"Subjects"} /> */}
-          <Table heading="Subjects" columns={columns} rows={[]} />
+          <Table heading="Subjects" columns={columns} rows={subjects} />
         </Container>
       </Layout>
+      )
+     }
     </>
   );
 };

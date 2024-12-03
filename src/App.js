@@ -1,15 +1,19 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Subjects from "./pages/Subjects";
-import Students from "./pages/Students";
+import Loader from "./components/Loader";
+
+const Home = React.lazy(()=> import("./pages/Home"));
+const Subjects = React.lazy(()=> import("./pages/Subjects"));
+const Students = React.lazy(()=> import("./pages/Students"));
+const StudentForm = React.lazy(()=> import("./pages/Students/StudentForm"));
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/student" element={<Students />} />
-      <Route path="/subject" element={<Subjects />} />
+      <Route path="/" element={<Suspense fallback={<Loader/>}><Home /></Suspense>} />
+      <Route path="/student" element={<Suspense fallback={<Loader/>}><Students /></Suspense>} />
+      <Route path="/subject" element={<Suspense fallback={<Loader/>}><Subjects /></Suspense>} />
+      <Route path="/student/add" element={<Suspense fallback={<Loader/>}><StudentForm /></Suspense>} />
     </Routes>
   );
 };

@@ -6,7 +6,7 @@ import {
 } from "@mui/icons-material";
 import moment from "moment";
 
-const Appbar = () => {
+const Appbar = ({title}) => {
   return (
     <Paper
       elevation={3}
@@ -14,7 +14,7 @@ const Appbar = () => {
     >
       <Stack direction={"row"} alignItems={"center"} spacing={"1rem"}>
         <AdminPanelSettingsIcon sx={{ fontSize: "3rem" }} />
-        <Typography variant="h5">Student Portal</Typography>
+        <Typography variant="h5">{title ? title : "Student Portal"}</Typography>
 
         <Box flexGrow={1}></Box>
         <Typography
