@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react"
-import { getSubjects } from "../apis/student";
 import { CommonsContext } from "./CommonContext";
+import { getSubjects } from "../apis/subject";
 
 export const SubjectsContext = createContext();
 

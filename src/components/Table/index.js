@@ -5,6 +5,8 @@ import { CommonsContext } from "../../context/CommonContext";
 import {useNavigate} from 'react-router-dom';
 
 const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
+  const {isEdit} = useContext(CommonsContext);
+  
   const navigate = useNavigate();
   return (
       <Paper
@@ -32,7 +34,7 @@ const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
       {
         addBtn && (
           <Typography style={{marginBottom: '1rem', display: 'flex', justifyContent: 'end'}}>
-          <Button variant="contained" color="secondary" onClick={()=> navigate("/student/add")}>Add</Button>
+          <Button variant="contained" color="secondary" onClick={()=> navigate(`/student/add`)}>Add</Button>
           </Typography>
         )
       }

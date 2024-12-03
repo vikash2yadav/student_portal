@@ -10,7 +10,6 @@ import {
   ArcElement,
   Legend,
 } from "chart.js";
-import { orange, purple } from "@mui/material/colors";
 
 ChartJs.register(
   Tooltip,
@@ -38,11 +37,11 @@ const DoughnutChart = ({value, labels}) => {
     labels,
     datasets: [{
       data: value,
-      label: "Total Chats vs Group Chats",
+      label: labels,
       fill: true,
-      backgroundColor: ['purple', 'orange'],
-      hoverBackgroundColor: ['purple', 'orange'],
-      borderColor: ['purple', 'orange'],
+      backgroundColor: ['#36A2EB', '#FF6384'],
+      hoverBackgroundColor: ['#60A0E1', '#FF7F88'],
+      borderColor: ['#36A2EB', '#FF6384'],
       offset: 40
     }
   ],

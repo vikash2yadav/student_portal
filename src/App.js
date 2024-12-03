@@ -13,7 +13,7 @@ const App = () => {
       <Route path="/" element={<Suspense fallback={<Loader/>}><Home /></Suspense>} />
       <Route path="/student" element={<Suspense fallback={<Loader/>}><Students /></Suspense>} />
       <Route path="/subject" element={<Suspense fallback={<Loader/>}><Subjects /></Suspense>} />
-      <Route path="/student/add" element={<Suspense fallback={<Loader/>}><StudentForm /></Suspense>} />
+      <Route path="/student/:type" element={<Suspense fallback={<Loader/>}><StudentForm /></Suspense>} />
     </Routes>
   );
 };

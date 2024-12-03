@@ -1,10 +1,10 @@
 import { Button } from '@mui/material'
 import React from 'react'
 
-const Buttonn = ({title, className, variant, color}) => {
+const Buttonn = ({ sx, title, type, className, variant, color, onClick}) => {
     return (
         <>
-            <Button className={className} variant={variant} color={color}>
+            <Button sx={sx} className={className} type={type} variant={variant} color={color} onClick={onClick}>
                 {title}
             </Button>
         </>
