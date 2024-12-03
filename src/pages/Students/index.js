@@ -3,18 +3,32 @@ import Layout from "../../components/Layout";
 import Table from "../../components/Table";
 import { Avatar, Container } from "@mui/material";
 import { StudentsContext } from "../../context/StudentContext";
+import { SubjectsContext } from "../../context/SubjectContext";
 import { CommonsContext } from "../../context/CommonContext";
 import Loader from "../../components/Loader";
-import { Edit as EditIcon, Delete as DeleteIcon } from "@mui/icons-material";
+import {
+  Edit as EditIcon,
+  Delete as DeleteIcon,
+  AddCircle as AddCircleIcon,
+} from "@mui/icons-material";
 import { deleteStudent, studentStatusUpdate } from "../../apis/student";
 import { useNavigate } from "react-router-dom";
 import Buttonn from "../../components/FormComponent/Buttonn";
+import Marks from "./Marks";
 
 const Students = () => {
   const navigate = useNavigate();
-  const { loading, setIsEdit, setOpen, setMessage, setSuccessMessage } =
-    useContext(CommonsContext);
+  const {
+    loading,
+    setIsEdit,
+    setOpen,
+    setMessage,
+    setSuccessMessage,
+    openModel,
+    setOpenModel,
+  } = useContext(CommonsContext);
   const { students, studentList } = useContext(StudentsContext);
+  const { subjects, subjectList } = useContext(SubjectsContext);
 
   const handleEdit = async (id) => {
     localStorage.setItem("std_id", id);
@@ -137,6 +151,18 @@ const Students = () => {
       ),
     },
     {
+      field: "Add Marks",
+      headerName: "Add Maks",
+      headerClassName: "table-header",
+      width: 100,
+      renderCell: (params) => (
+        <AddCircleIcon
+          className="cursor-pointer"
+          onClick={() => setOpenModel(true)}
+        />
+      ),
+    },
+    {
       field: "Action",
       headerName: "Action",
       headerClassName: "table-header",
@@ -158,6 +184,7 @@ const Students = () => {
 
   useEffect(() => {
     studentList();
+    subjectList();
   }, []);
 
   return (
@@ -177,6 +204,13 @@ const Students = () => {
               addBtn={true}
             />
           </Container>
+          <Marks
+            open={openModel}
+            onClose={() => setOpenModel(false)}
+            // onSubmit={handleSubmitMarks}
+            students={students}
+            subjects={subjects}
+          />
         </Layout>
       )}
     </>
