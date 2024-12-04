@@ -29,3 +29,8 @@ export const deleteStudent = async (id) => {
     let data = await callApi({url:`student/delete/${id}`, body:undefined, method: 'DELETE'});
     return data;
 }
+
+export const addStudentMark = async (body) => {
+    let data = await callApi({url:'student/mark/add', body, method: 'POST'});
+    return data;
+}

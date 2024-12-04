@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
 import { Avatar, Container } from "@mui/material";
@@ -10,11 +10,14 @@ import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   AddCircle as AddCircleIcon,
+  Visibility as VisibilityIcon,
 } from "@mui/icons-material";
 import { deleteStudent, studentStatusUpdate } from "../../apis/student";
 import { useNavigate } from "react-router-dom";
 import Buttonn from "../../components/FormComponent/Buttonn";
 import Marks from "./Marks";
+import { ShowMarks } from "./Marks/ShowMarks";
+import { renderActionsCell } from "@mui/x-data-grid";
 
 const Students = () => {
   const navigate = useNavigate();
@@ -29,6 +32,9 @@ const Students = () => {
   } = useContext(CommonsContext);
   const { students, studentList } = useContext(StudentsContext);
   const { subjects, subjectList } = useContext(SubjectsContext);
+  const [markData, setMarkData] = useState();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
 
   const handleEdit = async (id) => {
     localStorage.setItem("std_id", id);
@@ -71,6 +77,10 @@ const Students = () => {
     }
   };
 
+  const handleShowMarks = (data) => {
+    setMarkData(data);
+    setIsDialogOpen(true)
+  }
   const columns = [
     {
       field: "profile_picture",
@@ -130,6 +140,16 @@ const Students = () => {
       width: 200,
     },
     {
+      field: "show_marks",
+      headerName: "Show Marks",
+      headerClassName: "table-header",
+      width: 150,
+      renderCell: (params) => (<><VisibilityIcon
+        onClick={() => { handleShowMarks(params?.row?.marks) }}
+      />
+      </>)
+    },
+    {
       field: "status",
       headerName: "Status",
       headerClassName: "table-header",
@@ -138,9 +158,8 @@ const Students = () => {
         <>
           <Buttonn
             sx={{
-              backgroundColor: `${
-                params?.row?.status === "Active" ? "green" : "red"
-              }`,
+              backgroundColor: `${params?.row?.status === "Active" ? "green" : "red"
+                }`,
               color: "white",
               width: "100px",
             }}
@@ -184,9 +203,11 @@ const Students = () => {
 
   useEffect(() => {
     studentList();
-    subjectList();
-  }, []);
+  }, [setOpenModel]);
 
+  useEffect(()=>{
+    subjectList();
+  },[]);
   return (
     <>
       {loading ? (
@@ -211,6 +232,12 @@ const Students = () => {
             students={students}
             subjects={subjects}
           />
+          <ShowMarks
+            open={isDialogOpen}
+            onClose={()=> setIsDialogOpen(false)}
+            studentsMarks={markData}
+          />
+
         </Layout>
       )}
     </>

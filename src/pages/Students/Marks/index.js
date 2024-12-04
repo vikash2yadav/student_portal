@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -13,19 +13,22 @@ import {
   IconButton,
 } from "@mui/material";
 import { RemoveCircleOutline as RemoveCircleOutlineIcon } from "@mui/icons-material";
+import { addStudentMark } from '../../../apis/student';
+import { CommonsContext } from '../../../context/CommonContext';
+import { StudentsContext } from "../../../context/StudentContext";
 
 const Marks = ({ open, onClose, students, subjects }) => {
-  const [studentName, setStudentName] = useState("");
+  const { setOpen, setOpenModel, setMessage, setSuccessMessage } = useContext(CommonsContext);
+  const { studentList } = useContext(StudentsContext)
+  const [studentId, setStudentId] = useState("");
   const [marksData, setMarksData] = useState([
-    { subject: "", marks: "", total: 100 }, // Assuming 100 as max for each subject by default
+    { subject: "", marks: "", total: 100 },
   ]);
 
-  // Handle changes in subject, marks, and calculate the total
   const handleChange = (index, field, value) => {
     const updatedMarksData = [...marksData];
     updatedMarksData[index][field] = value;
 
-    // If the marks are updated, ensure they don't exceed the total
     if (field === "marks") {
       const marksValue = value ? parseInt(value) : 0;
       updatedMarksData[index].marks = marksValue > updatedMarksData[index].total ? updatedMarksData[index].total : marksValue;
@@ -33,28 +36,32 @@ const Marks = ({ open, onClose, students, subjects }) => {
 
     setMarksData(updatedMarksData);
   };
-
-  // Add a new row for subject and marks
   const handleAddRow = () => {
     setMarksData([...marksData, { subject: "", marks: "", total: 100 }]);
   };
 
-  // Remove a row for subject and marks
   const handleRemoveRow = (index) => {
     const updatedMarksData = marksData.filter((_, i) => i !== index);
     setMarksData(updatedMarksData);
   };
 
-  // Handle the form submission
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
 
     const marksPayload = {
-      studentName,
+      studentId,
       marks: marksData,
     };
-    
-    setStudentName("");
-    setMarksData([{ subject: "", marks: "", total: 100 }]);
+
+    const data = await addStudentMark(marksPayload);
+    if (data?.status === 200) {
+      setOpen(true);
+      setMessage(data?.data?.message);
+      setSuccessMessage(true);
+      setOpenModel(false)
+      setStudentId("");
+      setMarksData([{ subject: "", marks: "", total: 100 }]);
+      window.location.reload();
+    }
   };
 
   return (
@@ -66,8 +73,8 @@ const Marks = ({ open, onClose, students, subjects }) => {
           <FormControl fullWidth margin="normal">
             <InputLabel>Student</InputLabel>
             <Select
-              value={studentName}
-              onChange={(e) => setStudentName(e.target.value)}
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
               label="Student"
             >
               {students?.map((student) => (
