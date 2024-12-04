@@ -114,17 +114,6 @@ const StudentForm = () => {
           }}
         >
           <form onSubmit={formik.handleSubmit} className="mt-5">
-            <div className="grid grid-cols-1 gap-8 mb-5">
-              <div>
-                <Input
-                  label="Image"
-                  name="profile_picture"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-
             <div className="grid grid-cols-2 gap-8 mb-5">
               <div>
                 <Input
