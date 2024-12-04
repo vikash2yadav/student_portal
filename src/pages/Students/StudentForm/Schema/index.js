@@ -48,6 +48,6 @@ export const studentSchema = Yup.object({
     .max(new Date(), 'Enrollment date cannot be in the future'),
 
     status: Yup.string()
-    .oneOf(['Active', 'Inactive'], 'Status must be either active, inactive')
+    .oneOf(['Active', 'Suspended'], 'Status must be either active, suspended')
     .required('Status is required')
 });

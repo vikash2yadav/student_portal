@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { Container, Paper } from "@mui/material";
 import Appbar from "../../../components/Layout/Appbar";
@@ -16,6 +16,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import DatePickerComponent from "../../../components/FormComponent/DatePickerComponent";
 import { CommonsContext } from "../../../context/CommonContext";
+import ImageUploader from "../../../components/FormComponent/ImageUploader";
 
 export const genderOptions = [
   {
@@ -38,14 +39,17 @@ export const statusOptions = [
     value: "Active",
   },
   {
-    title: "Inactive",
-    value: "Inactive",
+    title: "Suspended",
+    value: "Suspended",
   },
 ];
 
 const StudentForm = () => {
   const params = useParams();
   const { setOpen, setMessage, setSuccessMessage } = useContext(CommonsContext);
+  const [showUpdateImage, setShowUpdateImage] = useState(null);
+  const [ImagePath, setImagePath] = useState();
+  const [newImage_url, setNewImage_url] = useState();
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -53,6 +57,7 @@ const StudentForm = () => {
     validationSchema: studentSchema,
     onSubmit: async (values) => {
       if (params?.type === "add") {
+        values.profile_picture = newImage_url;
         let data = await addStudent(values);
         if (data?.status === 200) {
           setOpen(true);
@@ -65,6 +70,7 @@ const StudentForm = () => {
           setMessage(data?.data?.message);
         }
       } else {
+        values.profile_picture = newImage_url;
         let data = await updateStudent(values);
 
         if (data.status === 200) {
@@ -86,6 +92,7 @@ const StudentForm = () => {
     let data = await getStudentProfile(id);
     if (data?.status === 200) {
       formik.setValues(data?.data?.data);
+      setShowUpdateImage(data?.data?.data?.profile_picture);
     }
   };
 
@@ -114,6 +121,16 @@ const StudentForm = () => {
           }}
         >
           <form onSubmit={formik.handleSubmit} className="mt-5">
+            <div className="grid grid-cols-1 gap-8 mb-5">
+              <div>
+                <ImageUploader
+                setNewImage_url={setNewImage_url}
+                showUpdateImage={showUpdateImage}
+                />
+              </div>
+            </div>
+
+
             <div className="grid grid-cols-2 gap-8 mb-5">
               <div>
                 <Input

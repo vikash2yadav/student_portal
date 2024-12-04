@@ -1,25 +1,23 @@
 import { Button, Paper, Typography } from "@mui/material";
-import React, { useContext } from "react";
+import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { CommonsContext } from "../../context/CommonContext";
 import {useNavigate} from 'react-router-dom';
 
 const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
-  const {isEdit} = useContext(CommonsContext);
   
   const navigate = useNavigate();
   return (
       <Paper
         elevation={3}
         sx={{
-          padding: "1rem 2rem",
+          padding: "2rem 2rem",
           borderRadius: "1rem",
           margin: '20px',
           width: "full",
           overflow: "hidden",
-          height: "100vh",
+          height: "100vh",          
           boxShadow: "none",
-        }}
+          }}
       >
         <Typography
           textAlign={"center"}
@@ -31,13 +29,14 @@ const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
         >
           {heading}
         </Typography>
-      {
+        {
         addBtn && (
-          <Typography style={{marginBottom: '1rem', display: 'flex', justifyContent: 'end'}}>
+          <Typography style={{marginBottom: '0.5rem', display: 'flex', justifyContent: 'end'}}>
           <Button variant="contained" color="secondary" onClick={()=> navigate(`/student/add`)}>Add</Button>
           </Typography>
         )
       }
+     
         <DataGrid
           rows={rows}
           columns={columns}
@@ -51,6 +50,7 @@ const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
             },
           }}
         />
+        
       </Paper>
   );
 };
