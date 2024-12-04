@@ -7,7 +7,7 @@ const TextArea = ({
   name,
   value,
   onChange,
-  onBlur,
+  onBlur
 }) => {
   return (
     <div>

@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React from "react";
 
-const Selectbox = ({ name, value, label, onChange, onBlur, option }) => {
+const Selectbox = ({ name, value, label, onChange, color, onBlur, option }) => {
   return (
     <>
       <FormControl fullWidth>

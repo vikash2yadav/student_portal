@@ -44,7 +44,7 @@ const ImageUploader = ({ setNewImage_url, showUpdateImage }) => {
       <img
         className="w-full object-cover"
         style={{ height: "200px", width: "200px" }}
-        src={imageSrc || "https://via.placeholder.com/150"}
+        src={imageSrc || "../../profile.png"}
         alt="Preview"
       />
 

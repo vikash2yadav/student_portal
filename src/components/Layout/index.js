@@ -1,7 +1,7 @@
 import { Drawer, Grid, IconButton, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "../styles/styleComponents";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Group as GroupIcon,
   LibraryBooks as LibraryBooksIcon,
@@ -28,13 +28,25 @@ const Tabs = [
 ];
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   const location = useLocation();
 
   return (
-    <Stack width={"full"} direction={"column"} p={"3rem"} spacing={"3rem"}>
-      <Typography variant="h5" textTransform={"uppercase"}>
-        Modules
+    <Stack width={"full"} direction={"column"} p={"3rem"} spacing={"1rem"}>
+      <Typography
+        variant="h5"
+        sx={{ textAlign: "center" }}
+        textTransform={"uppercase"}
+        className="flex justify-center items-center"
+      >
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL5Y4FngBenjEV8-aiKMj-oBV9mr9RgKaL7w&s"
+          alt=""
+          className="h-24 w-44 object-contained cursor-pointer"
+          onClick={() => navigate("/")}
+        />
       </Typography>
+      <hr className="border border-gray-300" />
 
       <Stack spacing={"1rem"}>
         {Tabs.map((i) => (
@@ -66,6 +78,7 @@ const Sidebar = () => {
 };
 
 const Layout = ({ children }) => {
+  const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const location = useLocation();
   const handleDrawerToggle = () => {
@@ -125,8 +138,18 @@ const Layout = ({ children }) => {
               p={"2rem"}
               spacing={"2rem"}
             >
-              <Typography variant="h5" textTransform={"uppercase"}>
-                Modules
+              <Typography
+                variant="h5"
+                sx={{ textAlign: "center" }}
+                textTransform={"uppercase"}
+                className="flex justify-center items-center"
+              >
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQL5Y4FngBenjEV8-aiKMj-oBV9mr9RgKaL7w&s"
+                  alt=""
+                  className="h-20 w-full object-contained"
+                  onClick={() => navigate("/")}
+                />
               </Typography>
               <Stack spacing={"1rem"}>
                 {Tabs.map((i) => (

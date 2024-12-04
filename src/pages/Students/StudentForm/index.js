@@ -238,7 +238,7 @@ const StudentForm = () => {
                   label="Enrollment Date"
                   name="enrollment_date"
                   value={formik.values.enrollment_date}
-                  onChange={formik.setFieldValue}
+                  onChange={formik.setFieldValue} 
                   className="w-full"
                 />
                 {formik.errors.enrollment_date && (
@@ -265,7 +265,7 @@ const StudentForm = () => {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
+            <div className="grid md:grid-cols-1 md:mb-5 mb-3">
               <TextArea
                 placeholder="Address"
                 name="address"

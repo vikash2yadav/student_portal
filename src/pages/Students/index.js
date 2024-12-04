@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
-import { Avatar, Container } from "@mui/material";
+import {
+  Avatar,
+  Container,
+} from "@mui/material";
 import { StudentsContext } from "../../context/StudentContext";
 import { SubjectsContext } from "../../context/SubjectContext";
 import { CommonsContext } from "../../context/CommonContext";
@@ -17,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Buttonn from "../../components/FormComponent/Buttonn";
 import Marks from "./Marks";
 import { ShowMarks } from "./Marks/ShowMarks";
+import ImageDialog from "../../components/ImageDialog";
 
 const Students = () => {
   const navigate = useNavigate();
@@ -33,7 +37,8 @@ const Students = () => {
   const { subjects, subjectList } = useContext(SubjectsContext);
   const [markData, setMarkData] = useState();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
+  const [selectedImage, setSelectedImage] = useState("");
+  const [openImage, setOpenImage] = useState(false);
 
   const handleEdit = async (id) => {
     localStorage.setItem("std_id", id);
@@ -78,8 +83,14 @@ const Students = () => {
 
   const handleShowMarks = (data) => {
     setMarkData(data);
-    setIsDialogOpen(true)
-  }
+    setIsDialogOpen(true);
+  };
+
+  const handleAvatarClick = (imageUrl) => {
+    setOpenImage(true);
+    setSelectedImage(imageUrl);
+  };
+
   const columns = [
     {
       field: "profile_picture",
@@ -87,7 +98,11 @@ const Students = () => {
       headerClassName: "table-header",
       width: 150,
       renderCell: (params) => (
-        <Avatar className="mt-3" src={params?.row?.profile_picture} />
+        <Avatar
+          className="mt-5 cursor-pointer"
+          src={params?.row?.profile_picture || './profile.png'}
+          onClick={() => handleAvatarClick(params?.row?.profile_picture)}
+        />
       ),
     },
     {
@@ -143,10 +158,15 @@ const Students = () => {
       headerName: "Show Marks",
       headerClassName: "table-header",
       width: 150,
-      renderCell: (params) => (<><VisibilityIcon
-        onClick={() => { handleShowMarks(params?.row?.marks) }}
-      />
-      </>)
+      renderCell: (params) => (
+        <>
+          <VisibilityIcon
+            onClick={() => {
+              handleShowMarks(params?.row?.marks);
+            }}
+          />
+        </>
+      ),
     },
     {
       field: "status",
@@ -157,8 +177,9 @@ const Students = () => {
         <>
           <Buttonn
             sx={{
-              backgroundColor: `${params?.row?.status === "Active" ? "green" : "red"
-                }`,
+              backgroundColor: `${
+                params?.row?.status === "Active" ? "green" : "red"
+              }`,
               color: "white",
               width: "100px",
             }}
@@ -170,7 +191,7 @@ const Students = () => {
     },
     {
       field: "Add Marks",
-      headerName: "Add Maks",
+      headerName: "Add Marks",
       headerClassName: "table-header",
       width: 100,
       renderCell: (params) => (
@@ -186,7 +207,7 @@ const Students = () => {
       headerClassName: "table-header",
       width: 200,
       renderCell: (params) => (
-        <div className="mt-3 flex space-x-4">
+        <div className="mt-8 flex space-x-4">
           <EditIcon
             className="cursor-pointer"
             onClick={() => handleEdit(params?.row?.id)}
@@ -202,21 +223,19 @@ const Students = () => {
 
   useEffect(() => {
     studentList();
-  }, [setOpenModel]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     subjectList();
-  },[]);
+  }, []);
+
   return (
     <>
       {loading ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <Layout>
           <Container component={"main"}>
-            {/* <Appbar title={"Subjects"} /> */}
             <Table
               heading="Students"
               columns={columns}
@@ -227,16 +246,20 @@ const Students = () => {
           <Marks
             open={openModel}
             onClose={() => setOpenModel(false)}
-            // onSubmit={handleSubmitMarks}
             students={students}
             subjects={subjects}
           />
           <ShowMarks
             open={isDialogOpen}
-            onClose={()=> setIsDialogOpen(false)}
+            onClose={() => setIsDialogOpen(false)}
             studentsMarks={markData}
           />
-
+          {/* Dialog for showing large image */}
+          <ImageDialog
+            open={openImage}
+            setOpen={setOpenImage}
+            image={selectedImage}
+          />
         </Layout>
       )}
     </>

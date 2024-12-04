@@ -3,7 +3,7 @@ import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import {useNavigate} from 'react-router-dom';
 
-const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
+const Table = ({ rows, columns, heading, rowHeight = 80, addBtn }) => {
   
   const navigate = useNavigate();
   return (

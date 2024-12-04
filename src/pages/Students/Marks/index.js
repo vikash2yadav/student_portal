@@ -5,21 +5,19 @@ import {
   DialogContent,
   DialogTitle,
   TextField,
-  Button,
   MenuItem,
   Select,
   FormControl,
   InputLabel,
   IconButton,
 } from "@mui/material";
-import { RemoveCircleOutline as RemoveCircleOutlineIcon } from "@mui/icons-material";
+import { RemoveCircleOutline as RemoveCircleOutlineIcon, Add as AddIcon } from "@mui/icons-material";
 import { addStudentMark } from '../../../apis/student';
 import { CommonsContext } from '../../../context/CommonContext';
-import { StudentsContext } from "../../../context/StudentContext";
+import Buttonn from "../../../components/FormComponent/Buttonn";
 
 const Marks = ({ open, onClose, students, subjects }) => {
   const { setOpen, setOpenModel, setMessage, setSuccessMessage } = useContext(CommonsContext);
-  const { studentList } = useContext(StudentsContext)
   const [studentId, setStudentId] = useState("");
   const [marksData, setMarksData] = useState([
     { subject: "", marks: "", total: 100 },
@@ -141,23 +139,18 @@ const Marks = ({ open, onClose, students, subjects }) => {
           ))}
 
           {/* Add Row Button */}
-          <Button
+          <Buttonn
             variant="outlined"
-            color="primary"
+            color="secondary"
             onClick={handleAddRow}
-            style={{ marginTop: 10 }}
-          >
-            Add Subject
-          </Button>
+            title={'Add Subject'}
+            startIcon={<AddIcon/>}
+          />
         </form>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} color="secondary">
-          Cancel
-        </Button>
-        <Button onClick={handleSubmit} color="primary" variant="contained">
-          Submit
-        </Button>
+        <Buttonn onClick={onClose} color="secondary" title={'Cancel'} variant={"outlined"}/>
+        <Buttonn onClick={handleSubmit} color="secondary" title={'Submit'} variant="contained" />
       </DialogActions>
     </Dialog>
   );
