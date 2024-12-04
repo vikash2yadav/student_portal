@@ -82,15 +82,15 @@ const Students = () => {
     setIsDialogOpen(true)
   }
   const columns = [
-    {
-      field: "profile_picture",
-      headerName: "Profile",
-      headerClassName: "table-header",
-      width: 150,
-      renderCell: (params) => (
-        <Avatar className="mt-3" src={params?.row?.profile_picture} />
-      ),
-    },
+    // {
+    //   field: "profile_picture",
+    //   headerName: "Profile",
+    //   headerClassName: "table-header",
+    //   width: 150,
+    //   renderCell: (params) => (
+    //     <Avatar className="mt-3" src={params?.row?.profile_picture} />
+    //   ),
+    // },
     {
       field: "first_name",
       headerName: "First Name",
