@@ -48,7 +48,6 @@ const StudentForm = () => {
   const params = useParams();
   const { setOpen, setMessage, setSuccessMessage } = useContext(CommonsContext);
   const [showUpdateImage, setShowUpdateImage] = useState(null);
-  const [ImagePath, setImagePath] = useState();
   const [newImage_url, setNewImage_url] = useState();
   const navigate = useNavigate();
 
@@ -131,7 +130,7 @@ const StudentForm = () => {
             </div>
 
 
-            <div className="grid grid-cols-2 gap-8 mb-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
               <div>
                 <Input
                   label="First Name"
@@ -167,7 +166,7 @@ const StudentForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 mb-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
               <div>
                 <Input
                   label="Email"
@@ -201,7 +200,7 @@ const StudentForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 mb-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
               <div>
                 <Input
                   label="Phone Number"
@@ -233,7 +232,7 @@ const StudentForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-8 mb-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
               <div>
                 <DatePickerComponent
                   label="Enrollment Date"
@@ -266,7 +265,7 @@ const StudentForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 mb-5">
+            <div className="grid md:grid-cols-2 grid-cols-1 md:gap-8 gap-2 md:mb-5 mb-3">
               <TextArea
                 placeholder="Address"
                 name="address"

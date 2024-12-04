@@ -23,7 +23,7 @@ const Table = ({ rows, columns, heading, rowHeight = 60, addBtn }) => {
           textAlign={"center"}
           variant="h4"
           sx={{
-            margin: "2rem",
+            margin: "1rem 0.5rem",
             textTransform: "uppercase",
           }}
         >

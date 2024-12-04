@@ -83,7 +83,7 @@ const Students = () => {
   const columns = [
     {
       field: "profile_picture",
-      headerName: "Profile",
+      headerName: "Profile Picture",
       headerClassName: "table-header",
       width: 150,
       renderCell: (params) => (
