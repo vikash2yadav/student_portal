@@ -45,6 +45,11 @@ const Marks = ({ open, onClose, students, subjects }) => {
 
   const handleSubmit = async () => {
 
+    if(studentId === "" || marksData?.length < 0){
+        setOpen(true);
+        setMessage('Enter required feilds');
+        setSuccessMessage(false);
+    }
     const marksPayload = {
       studentId,
       marks: marksData,

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Dialog,
   DialogActions,
@@ -42,7 +42,7 @@ export const ShowMarks = ({ open, onClose, studentsMarks }) => {
             </Table>
           </TableContainer>
         ) : (
-          <p>No marks data available.</p>
+          <p className="text-center">No data available.</p>
         )}
       </DialogContent>
       <DialogActions>

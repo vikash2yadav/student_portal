@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../components/Layout";
 import Table from "../../components/Table";
-import {
-  Avatar,
-  Container,
-} from "@mui/material";
+import { Avatar, Container } from "@mui/material";
 import { StudentsContext } from "../../context/StudentContext";
 import { SubjectsContext } from "../../context/SubjectContext";
 import { CommonsContext } from "../../context/CommonContext";
@@ -100,7 +97,7 @@ const Students = () => {
       renderCell: (params) => (
         <Avatar
           className="mt-5 cursor-pointer"
-          src={params?.row?.profile_picture || './profile.png'}
+          src={params?.row?.profile_picture || "./profile.png"}
           onClick={() => handleAvatarClick(params?.row?.profile_picture)}
         />
       ),
@@ -231,37 +228,37 @@ const Students = () => {
 
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <Layout>
-          <Container component={"main"}>
+      <Layout>
+        <Container component={"main"}>
+          {loading ? (
+            <Loader />
+          ) : (
             <Table
               heading="Students"
               columns={columns}
               rows={students}
               addBtn={true}
             />
-          </Container>
-          <Marks
-            open={openModel}
-            onClose={() => setOpenModel(false)}
-            students={students}
-            subjects={subjects}
-          />
-          <ShowMarks
-            open={isDialogOpen}
-            onClose={() => setIsDialogOpen(false)}
-            studentsMarks={markData}
-          />
-          {/* Dialog for showing large image */}
-          <ImageDialog
-            open={openImage}
-            setOpen={setOpenImage}
-            image={selectedImage}
-          />
-        </Layout>
-      )}
+          )}
+        </Container>
+        <Marks
+          open={openModel}
+          onClose={() => setOpenModel(false)}
+          students={students}
+          subjects={subjects}
+        />
+        <ShowMarks
+          open={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
+          studentsMarks={markData}
+        />
+        {/* Dialog for showing large image */}
+        <ImageDialog
+          open={openImage}
+          setOpen={setOpenImage}
+          image={selectedImage}
+        />
+      </Layout>
     </>
   );
 };

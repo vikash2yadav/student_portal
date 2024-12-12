@@ -25,7 +25,7 @@ const Appbar = ({title}) => {
           {" "}
           {moment().format("MMMM Do YYYY")}{" "}
         </Typography>
-        <NotificationsIcon />
+        <NotificationsIcon sx={{cursor: 'pointer'}} onClick={()=> alert("We are working on it")} />
       </Stack>
     </Paper>
   );
